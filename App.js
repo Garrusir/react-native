@@ -6,25 +6,54 @@ import { EndScreen } from './src/EndScreen';
 
 
 export default function App() {
-  const [playerScore, setPlayerScore] = useState(99);
-  const [robotScore, setRobotScore] = useState(99);
+  const [playerScore, setPlayerScore] = useState(0);
+  const [robotScore, setRobotScore] = useState(0);
   const [isPlayerTurn, setPlayerTurn] = useState(true);
+  const [firstDice, setFirstDice] = useState(0);
+  const [secondDice, setSecondDice] = useState(0);
+  const [isDouble, setIsDouble] = useState(false);
 
-  const getRandom = () => {
+
+  function getRandom() {
     return Math.floor(Math.random() * Math.floor(6)+1);
   }
 
+  function trowDices() {
+    let [first, second] = [getRandom(), getRandom()];
+    setFirstDice(first);
+    setSecondDice(second);
+
+    if (first === second) {
+      setIsDouble(true);
+      const interval = setInterval(() => {
+        let [first, second] = [getRandom(), getRandom()];
+        setFirstDice(first);
+        setSecondDice(second);
+
+        if (first !== second) {
+          clearInterval(interval);
+          setIsDouble(false);
+        }
+      }, 2000)
+    }
+
+    return [first, second];
+  }
+
   const addPlayerScore = () => {
-    setPlayerScore(prev => prev+getRandom()+getRandom());
+    let [first, second] = trowDices();
+
+    setPlayerScore(prev => prev+first+second);
     playerScore < 100 ? addRobotScore() : null;
   }
 
   const addRobotScore = () => {
     setPlayerTurn(false);
-    setTimeout(()=> {
-      setRobotScore(prev => prev+getRandom()+getRandom());
+    setTimeout(() => {
+      let [first, second] = trowDices();
+      setRobotScore(prev => prev+first+second);
       setPlayerTurn(true);
-    }, 1500);
+    }, 2000)
   }
 
   const getWinner = () => {
@@ -34,6 +63,8 @@ export default function App() {
   const reset = () => {
     setPlayerScore(0);
     setRobotScore(0);
+    setFirstDice(0);
+    setSecondDice(0)
     setPlayerTurn(true);
   }
 
@@ -50,6 +81,9 @@ export default function App() {
     isPlayerTurn={isPlayerTurn}
     playerScore={playerScore}
     robotScore={robotScore}
+    firstDice={firstDice}
+    secondDice={secondDice}
+    isDouble={isDouble}
     clickHandler={ addPlayerScore }/>
     :
     <EndScreen getWinner={getWinner} reset={reset}/>

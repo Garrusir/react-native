@@ -5,7 +5,6 @@
     "platforms": [
       "ios",
       "android",
-      "web"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,7 +21,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.garrusir.dice-game",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.garrusir.dice_game",
+      "versionCode": 1
     }
   }
 }
