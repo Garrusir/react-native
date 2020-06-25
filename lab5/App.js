@@ -55,7 +55,7 @@ export default class App extends React.Component {
     db.transaction(
       tx => {
         tx.executeSql(`delete from contacts where id = ?;`, [id]);
-        tx.executeSql("select * from contacts", [], (_, {rows}) => 
+        tx.executeSql("select * from contacts", [], (_, {rows}) =>
           this.setState({ contacts: rows._array }))
       },
       (err) => console.log('ERROR'),
@@ -100,20 +100,20 @@ export default class App extends React.Component {
           !this.state.isAdding && !this.state.isUpdating &&
           <View style={styles.flexRow}>
             <Button title="Добавить Контакт" color="#29434e" onPress={() => this.setState({ isAdding: true })}/>
-              <FlatList 
+              <FlatList
                 data={this.state.contacts}
                 scrollEnabled={true}
                 renderItem={({ item }) =>
-                   <Contact 
-                     id={item.id} 
-                     firstName={item.firstName} 
+                   <Contact
+                     id={item.id}
+                     firstName={item.firstName}
                      lastName={item.lastName}
                      phone={item.phone}
                      onRemove={this.remove}
                      onUpdate={this.update}
                    />
                  }
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.id.toString()}
               />
           </View>
         }

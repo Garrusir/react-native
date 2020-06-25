@@ -13,23 +13,22 @@ export default class AddContact extends React.Component {
     phone: '',
   };
 
-
   render() {
     return (
       <View style={styles.container}>
-       <TextInput 
+       <TextInput
           style={styles.input}
           placeholder="Имя"
           onChangeText={text => this.setState({ firstName: text })}
           value={this.state.firstName}
         />
-        <TextInput 
+        <TextInput
           style={styles.input}
           placeholder="Фамилия"
           onChangeText={text => this.setState({ lastName: text })}
           value={this.state.lastName}
         />
-        <TextInput 
+        <TextInput
           style={styles.input}
           placeholder="Телефон"
           onChangeText={text => this.setState({ phone: text })}
